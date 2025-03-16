@@ -48,10 +48,26 @@ def add_round_to_order(round_items: List[RoundItem]):
     # Actualizamos el subtotal de la orden (esto depende de los items agregados en el round)
     for item in round_items:
         order["subtotal"] += item.quantity * next(beer for beer in stock["beers"] if beer["name"] == item.name)["price"]
+
+    # Actualizamos la propiedad items de la orden
+    for round_item in round_items:
+        # Buscar si la cerveza ya está en order["items"]
+        existing_item = next((item for item in order["items"] if item["name"] == round_item.name), None)
+        
+        if existing_item:
+            existing_item["total"] += round_item.quantity  # Sumar cantidad si ya existe
+        else:
+            # Agregar nuevo item con estructura correcta
+            print()
+            order["items"].append({
+                "name": round_item.name,
+                "price_per_unit": next(beer for beer in stock["beers"] if beer["name"] == round_item.name)["price"],  # Puedes modificarlo si tienes el precio real
+                "total": round_item.quantity
+            })
     
     # Actualizamos los impuestos y descuentos (puedes hacer esto según tu lógica de negocio)
-    # order["taxes"] = order["subtotal"] * 0.1  # Ejemplo: 10% de impuestos
-    # order["discounts"] = 0  # Aquí puedes agregar lógica para descuentos
+    order["taxes"] = order["subtotal"] * 0.1  # Ejemplo: 10% de impuestos
+    order["discounts"] = 0  # Aquí puedes agregar lógica para descuentos
 
     # Finalmente, actualizamos el total
     # order["total"] = order["subtotal"] + order["taxes"] - order["discounts"]
