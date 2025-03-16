@@ -24,7 +24,6 @@ def update_stock(round_items: List[RoundItem]):
     for order_item in round_items:
         # Buscar la cerveza en el stock
         beer = next((beer for beer in stock["beers"] if beer["name"] == order_item.name), None)
-        print(beer)
         if beer is None:
             raise HTTPException(status_code=404, detail=f"Beer {order_item.name} not found in stock.")
         
@@ -39,7 +38,7 @@ def update_stock(round_items: List[RoundItem]):
         stock["last_updated"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Función para agregar un nuevo "round" a la orden
-def add_round_to_order(round_items):
+def add_round_to_order(round_items: List[RoundItem]):
     round_data = {
         "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "items": round_items
@@ -48,7 +47,7 @@ def add_round_to_order(round_items):
     
     # Actualizamos el subtotal de la orden (esto depende de los items agregados en el round)
     for item in round_items:
-        order["subtotal"] += item["quantity"] * next(beer for beer in stock["beers"] if beer["name"] == item["name"])["price"]
+        order["subtotal"] += item.quantity * next(beer for beer in stock["beers"] if beer["name"] == item.name)["price"]
     
     # Actualizamos los impuestos y descuentos (puedes hacer esto según tu lógica de negocio)
     # order["taxes"] = order["subtotal"] * 0.1  # Ejemplo: 10% de impuestos
@@ -63,7 +62,7 @@ def create_round(round_request: RoundRequest):
     update_stock(round_request.round_items)
     
     # Luego agregamos el nuevo "round" a la orden
-    # add_round_to_order(round_items)
+    add_round_to_order(round_request.round_items)
     
     # Retornamos el estado actualizado de la orden y el stock
     return {"message": "Round added successfully", "order": order, "updated_stock": stock}
