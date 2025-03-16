@@ -1,18 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AppError, Order } from "./types";
+import { AppError } from "./types";
 import { getOrder } from "@/app/services/getOrder";
+import { orderAdapter } from "@/app/adapters/orderAdapter";
+import { OrderClass } from "@/app/domain/order";
 
 export const getOrderThunk = createAsyncThunk<
-  Order,
+  OrderClass,
   void,
   { rejectValue: AppError }
->("stockPoints/getStockPoints", async (_, { rejectWithValue }) => {
+>("order/getStockPoints", async (_, { rejectWithValue }) => {
   const order = await getOrder();
-  console.log(order);
+  const adaptedOrder = orderAdapter(order);
 
-  //   const adaptedOrder = orderAdapter(products);
-
-  return {
-    // products: adaptedStockPoints,
-  } as any;
+  return adaptedOrder;
 });

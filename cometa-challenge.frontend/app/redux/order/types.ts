@@ -1,3 +1,5 @@
+import { OrderClass } from "@/app/domain/order";
+
 export class AppError {
   name: string;
   message: string;
@@ -10,7 +12,7 @@ export class AppError {
 }
 
 export interface OrderState {
-  order: Order | null;
+  order: OrderClass | null;
   status: "idle" | "succeeded" | "failed" | "gettingOrder" | "creatingRound";
   error: AppError | undefined;
 }
