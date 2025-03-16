@@ -1,5 +1,6 @@
 import React from "react";
 import { ItemsProps } from "./types";
+import { Typography } from "../../designSystemComponents/Typography";
 
 const Items = ({ order }: ItemsProps) => {
   return (
@@ -31,6 +32,45 @@ const Items = ({ order }: ItemsProps) => {
                 </td>
               </tr>
             ))}
+            <tr>
+              <td
+                colSpan={4}
+                className="border border-gray-400 px-4 py-2 text-center bg-gray-100"
+              >
+                <div className="flex justify-between">
+                  <Typography variant="body medium" bold>
+                    Subtotal
+                  </Typography>
+                  <Typography variant="body medium">
+                    $ {order.subtotal.toFixed(2)}
+                  </Typography>
+                </div>
+                <div className="flex justify-between">
+                  <Typography variant="body medium" bold>
+                    Tasas
+                  </Typography>
+                  <Typography variant="body medium">
+                    $ {order.taxes.toFixed(2)}
+                  </Typography>
+                </div>
+                <div className="flex justify-between">
+                  <Typography variant="body medium" bold>
+                    Descuento
+                  </Typography>
+                  <Typography variant="body medium">
+                    $ {order.discounts.toFixed(2)}
+                  </Typography>
+                </div>
+                <div className="flex justify-between">
+                  <Typography variant="body medium" bold>
+                    Subtotal
+                  </Typography>
+                  <Typography variant="body medium">
+                    $ {order.getTotal().toFixed(2)}
+                  </Typography>
+                </div>
+              </td>
+            </tr>
           </>
         ) : (
           "no hay items cargados"
