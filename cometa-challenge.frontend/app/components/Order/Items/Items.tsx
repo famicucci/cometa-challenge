@@ -1,16 +1,18 @@
 import React from "react";
 import { ItemsProps } from "./types";
 import { Typography } from "../../designSystemComponents/Typography";
+import { columns } from "./utils";
 
 const Items = ({ order }: ItemsProps) => {
   return (
     <table className="table-auto border-collapse border border-gray-300 w-full">
       <thead>
         <tr className="bg-gray-200">
-          <th className="border border-gray-300 px-4 py-2">Item</th>
-          <th className="border border-gray-300 px-4 py-2">Precio</th>
-          <th className="border border-gray-300 px-4 py-2">Cant.</th>
-          <th className="border border-gray-300 px-4 py-2">Total</th>
+          {columns.map((column) => (
+            <th key={column.name} className="border border-gray-300 px-4 py-2">
+              {column.name}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
