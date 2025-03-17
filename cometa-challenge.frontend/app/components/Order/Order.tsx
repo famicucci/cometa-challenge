@@ -11,9 +11,8 @@ const Order = ({ order }: OrderProps) => {
           Detalle de Orden
         </Typography>
         <Typography variant="body big">
-          {order.paid ? "Pago" : "No pago"}
+          {order.paid ? "Pago".toUpperCase() : "No pago".toUpperCase()}
         </Typography>
-        <Typography variant="body big">{order.getTotal()}</Typography>
       </div>
       <Items order={order} />
     </div>
