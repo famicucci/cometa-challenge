@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { ItemsProps } from "./types";
 import { Typography } from "../../designSystemComponents/Typography";
 import { columns } from "./utils";
 
 const Items = ({ order }: ItemsProps) => {
+  const priceDetails = useMemo(
+    () => [
+      { title: "Subtotal", amount: order.subtotal },
+      { title: "Tasas", amount: order.taxes },
+      { title: "Descuento", amount: order.discounts },
+      { title: "Total", amount: order.getTotal() },
+    ],
+    []
+  );
+
   return (
     <table className="table-auto border-collapse border border-gray-300 w-full">
       <thead>
@@ -35,38 +45,16 @@ const Items = ({ order }: ItemsProps) => {
                 colSpan={4}
                 className="border border-gray-300 px-4 py-2 text-center bg-gray-100"
               >
-                <div className="flex justify-between">
-                  <Typography variant="body medium" bold>
-                    Subtotal
-                  </Typography>
-                  <Typography variant="body medium">
-                    $ {order.subtotal.toFixed(2)}
-                  </Typography>
-                </div>
-                <div className="flex justify-between">
-                  <Typography variant="body medium" bold>
-                    Tasas
-                  </Typography>
-                  <Typography variant="body medium">
-                    $ {order.taxes.toFixed(2)}
-                  </Typography>
-                </div>
-                <div className="flex justify-between">
-                  <Typography variant="body medium" bold>
-                    Descuento
-                  </Typography>
-                  <Typography variant="body medium">
-                    $ {order.discounts.toFixed(2)}
-                  </Typography>
-                </div>
-                <div className="flex justify-between">
-                  <Typography variant="body medium" bold>
-                    Subtotal
-                  </Typography>
-                  <Typography variant="body medium">
-                    $ {order.getTotal().toFixed(2)}
-                  </Typography>
-                </div>
+                {priceDetails.map((priceDetail) => (
+                  <div key={priceDetail.title} className="flex justify-between">
+                    <Typography variant="body medium" bold>
+                      {priceDetail.title}
+                    </Typography>
+                    <Typography variant="body medium">
+                      $ {priceDetail.amount.toFixed(2)}
+                    </Typography>
+                  </div>
+                ))}
               </td>
             </tr>
           </>
