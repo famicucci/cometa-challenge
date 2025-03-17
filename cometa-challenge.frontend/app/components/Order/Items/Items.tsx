@@ -20,18 +20,14 @@ const Items = ({ order }: ItemsProps) => {
           <>
             {order.items.map((item) => (
               <tr key={item.name}>
-                <td className="border border-gray-300 px-4 py-2">
-                  {item.name}
-                </td>
-                <td className="border border-gray-300 px-4 py-2 text-right">
-                  $ {item.price_per_unit.toFixed(2)}
-                </td>
-                <td className="border border-gray-300 px-4 py-2 text-center">
-                  {item.total}
-                </td>
-                <td className="border border-gray-300 px-4 py-2 text-right">
-                  $ {(item.price_per_unit * item.total).toFixed(2)}
-                </td>
+                {columns.map((column) => (
+                  <td
+                    key={column.name}
+                    className={`border border-gray-300 px-4 py-2 text-${column.align}`}
+                  >
+                    {column.selector(item)}
+                  </td>
+                ))}
               </tr>
             ))}
             <tr>
