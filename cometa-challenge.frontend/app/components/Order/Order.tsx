@@ -6,7 +6,7 @@ import { Items } from "./Items";
 const Order = ({ order }: OrderProps) => {
   return (
     <div>
-      <div className="flex justify-between items-center gap-5">
+      <div className="flex justify-between items-center gap-5 mb-2">
         <Typography variant="body big" bold>
           Detalle de Orden
         </Typography>
