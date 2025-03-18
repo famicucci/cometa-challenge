@@ -37,3 +37,10 @@ cometa-challenge/
     └── main.py
 
 ```
+
+## Endpoints del Backend
+
+- **GET** `http://127.0.0.1:8000/order/` - getOrder.
+- **GET** `http://127.0.0.1:8000/stock/` - getStock.
+- **POST** `http://127.0.0.1:8000/stock/beers/` - addBeer.
+- **POST** `http://127.0.0.1:8000/order/round` - addRoundToOrder.
